@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Enquiry Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("YdvyJz6-fhtjPGrhX"); // Replace with your EmailJS user ID (or public key)
+    })();
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2 style="text-align:center;">Enquiry Form</h2>
+
+  <form id="enquiry-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="user_name" required>
+
+    <label for="number">Phone Number:</label>
+    <input type="text" id="number" name="user_number" required>
+
+    <label for="requirement">Your Requirement:</label>
+    <textarea id="requirement" name="user_requirement" rows="4" required></textarea>
+
+    <label for="service">Service:</label>
+    <select id="service" name="user_service" required>
+      <option value="">--Select a Service--</option>
+      <option value="Interior">Interior</option>
+      <option value="Construction">Construction</option>
+      <option value="Electric Work">Electric Work</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById("enquiry-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const now = new Date();
+
+      const params = {
+        name: document.getElementById("name").value,
+        number: document.getElementById("number").value,
+        requirement: document.getElementById("requirement").value,
+        service: document.getElementById("service").value,
+        time: now.toLocaleString()
+      };
+
+      emailjs.send("service_irtg7ph", "template_8ibovol", params)
+        .then(function (response) {
+          alert("Enquiry sent successfully!");
+          document.getElementById("enquiry-form").reset();
+        }, function (error) {
+          alert("Failed to send enquiry. Please try again.");
+          console.log("FAILED...", error);
+        });
+    });
+  </script>
+
+</body>
+
+</html>

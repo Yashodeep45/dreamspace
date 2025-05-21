@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dreamspace Slideshow</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+
+    }
+
+    .mySlides {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      transition: opacity 1s ease-in-out;
+
+    }
+
+    .active-slide {
+
+      display: block;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 3em;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 20px 40px;
+      border-radius: 10px;
+
+    }
+
+    #menuBtn {
+      position: absolute;
+      top: 7px;
+      right: 30px;
+      z-index: 10;
+      background-color: #000000aa;
+      color: white;
+      font-size: 18px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #sideMenu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      height: 100%;
+      width: 300px;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 30px 20px;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease-in-out;
+      z-index: 9;
+    }
+
+    #sideMenu2 {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      height: 100%;
+      width: 300px;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 30px 20px;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease-in-out;
+      z-index: 9;
+    }
+
+    #sideMenu.open {
+      right: 0;
+    }
+
+    #sideMenu2.open {
+      right: 0;
+    }
+
+    #sideMenu p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    #sideMenu2 p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    #sideMenu ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #sideMenu2 ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #sideMenu li {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    #sideMenu2 li {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    #pro {
+      display: none;
+      padding: 20px;
+      background: #111;
+      color: white;
+    }
+
+    #pro.open {
+      display: block;
+    }
+
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-modal.open {
+      display: flex;
+    }
+
+    .video-modal video {
+      width: 90%;
+      height: auto;
+      max-height: 90vh;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    #projectbtn {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 30px;
+      width: 100px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+
+    }
+
+    #projectbtn:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+
+    #con {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 30px;
+      width: 100px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #con:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #contact {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 30px;
+      width: 100px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #contact:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #services {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 30px;
+      width: 100px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #services:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #enquiry {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 30px;
+      width: 100px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #enquiry:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #bed {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 60px;
+      width: 130px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #bed:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #con1 {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 60px;
+      width: 130px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #con1:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #kit {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 60px;
+      width: 130px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #kit:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #liv {
+      background-color: antiquewhite;
+      border-style: solid;
+      border-radius: 15px;
+      height: 60px;
+      width: 130px;
+      color: rgb(68, 67, 67);
+      cursor: pointer;
+    }
+
+    #liv:hover {
+      transform: scale(1.5);
+      transition: 0.3s;
+    }
+
+    #head {
+      background-color: #464040ed;
+      color: aliceblue;
+      font-size: 20px;
+    }
+
+    #name {
+      margin-left: 600px;
+      font-family: 'Cinzel', serif;
+
+    }
+
+    #ov {
+      font-family: 'Cinzel', serif;
+      font-size: 30px;
+
+    }
+
+    .logo-heading {
+      display: flex;
+      align-items: center;
+
+      /* space between logo and text */
+    }
+
+    #name {
+      margin-left: 450px;
+    }
+
+    #lo {
+      width: 60px;
+      /* adjust size as needed */
+      height: auto;
+      margin-left: 20px;
+
+    }
+  </style>
+  <link rel="icon" href="favicon.png" type="image/png">
+
+</head>
+
+<body>
+
+  <header id="head">
+    <div class="logo-heading">
+      <img id="lo" src="favicon.png" alt="Logo">
+      <h1 id="name">DREAMSPACE DESIGNS</h1>
+    </div>
+  </header>
+
+  <div class="slideshow-container">
+    <img src="image1.jpg" class="mySlides active-slide" alt="Slide 1">
+    <img src="image2.jpg" class="mySlides" alt="Slide 2">
+    <img src="image3.jpg" class="mySlides" alt="Slide 3">
+    <img src="image4.jpg" class="mySlides" alt="Slide 4">
+    <img src="image5.jpg" class="mySlides" alt="Slide 5">
+    <img src="image6.jpg" class="mySlides" alt="Slide 6">
+    <img src="image7.jpg" class="mySlides" alt="Slide 7">
+    <img src="image8.jpg" class="mySlides" alt="Slide 8">
+    <img src="image9.jpg" class="mySlides" alt="Slide 9">
+
+
+    <div id="ov" class="overlay-text">DREAMSPACE - REDEFINING LUXURY!!!</div>
+  </div>
+
+  <!-- Menu Toggle Button -->
+  <button id="menuBtn">☰ Menu</button>
+
+  <!-- Hidden Menu Section -->
+  <div id="sideMenu">
+    <p id="about">Welcome to Dreamspace! Explore our work and get in touch for your dream interior transformation.
+      -By Ronak Pokar(CEO)
+    </p>
+    <ul>
+      <li><button id="projectbtn">Designs</button></li>
+      <li><button id="contact">Contact</button></li>
+      <li><button id="enquiry">Enquiry</button></li>
+      <li><button id="services">Services</button></li>
+      <li><button id="con">About Us</button></li>
+
+    </ul>
+  </div>
+
+
+  <!-- Fullscreen Video Modal -->
+  <div id="sideMenu2">
+    <p>Have a Look at our luxurious Designs</p>
+    <ul>
+      <li><button id="bed">BEDROOM DESIGNS</button></li>
+      <li><button id="kit">KITCHEN DESIGNS</button></li>
+      <li><BUTTON id="liv">LIVING ROOM DESIGNS</BUTTON></li>
+      <LI><button id="con1">FULL HOUSE DESIGNS </button></LI>
+    </ul>
+
+  </div>
+
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sideMenu = document.getElementById("sideMenu");
+    const projectbtn = document.getElementById("projectbtn");
+    const sideMenu2 = document.getElementById("sideMenu2");
+    const bed = document.getElementById("bed");
+    const liv = document.getElementById("liv");
+    const full = document.getElementById("con1");
+    const contact = document.getElementById("contact");
+    const services = document.getElementById("services");
+    const kitchen = document.getElementById("kit");
+    const enquiry = document.getElementById("enquiry");
+    const about = document.getElementById("con");
+
+
+
+    bed.addEventListener("click", () => {
+      window.open("https://drive.google.com/file/d/1HuugHBRhVU8RCKIDdv9_SvHQhx9P_X7y/view?usp=drive_link", "_blank");
+    });
+    liv.addEventListener("click", () => {
+      window.open("https://drive.google.com/file/d/1W-2GZBYiiKYy1LRkKFbyUpK2wQxkzQkf/view?usp=drive_link", "_blank");
+    });
+    full.addEventListener("click", () => {
+      window.open("https://drive.google.com/file/d/1SgpfdARhdF-gJWndYXTZ6GoRbzbMlsAU/view?usp=drive_link", "_blank");
+    });
+    kitchen.addEventListener("click", () => {
+      window.open("https://drive.google.com/file/d/1dTLAC7fxFLWjpA0kavnWWCQM5LjCkbsa/view?usp=drive_link", "_blank");
+    });
+    contact.addEventListener("click", () => {
+      window.open("contact.html", "_blank", "width=800,height=600");
+    });
+    services.addEventListener("click", () => {
+      window.open("services.html", "_blank");
+    });
+    projectbtn.addEventListener("click", () => {
+      sideMenu2.classList.toggle("open");
+    });
+    menuBtn.addEventListener("click", () => {
+      sideMenu.classList.toggle("open");
+    });
+    enquiry.addEventListener("click", () => {
+      window.open("enquiry.html", "_blank");
+    });
+    about.addEventListener("click", () => {
+      window.open("about.html", "_blank");
+    });
+
+
+
+
+
+
+
+  </script>
+  <script>
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("mySlides");
+
+    function showSlides() {
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active-slide");
+      }
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add("active-slide");
+    }
+
+    setInterval(showSlides, 2000);
+    // Change every 3 seconds
+
+
+  </script>
+  <script>
+    document.addEventListener("click", function (event) {
+      const isClickInsideMenu = sideMenu2.contains(event.target);
+      const isClickOnButton = projectbtn.contains(event.target);
+
+      if (!isClickInsideMenu && !isClickOnButton) {
+        sideMenu2.classList.remove("open");
+
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        // Exit fullscreen
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+
+        // Hide modal
+        vido.classList.remove("open");
+        video.pause();
+        video.currentTime = 0;
+
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>
